@@ -79,6 +79,18 @@ export default {
     countProducts() {
       return this.productsData ? this.productsData.pagination.total : 0;
     },
+    filterPriceFrom() {
+      return this.filter.priceFrom;
+    },
+    filterPriceTo() {
+      return this.filter.priceTo;
+    },
+    filterCategoryId() {
+      return this.filter.categoryId;
+    },
+    filterColorId() {
+      return this.filter.colorId;
+    },
   },
   methods: {
     loadProducts() {
@@ -99,7 +111,12 @@ export default {
               color: this.filter.colorId,
             }
           })
-            .then((response) => this.productsData = response.data)
+            .then((response) => {
+              this.productsData = response.data;
+              this.productsData.items.filter((product) => {
+                product.colors.forEach(item => item.id) === this.filter.colorId
+              }); 
+            })
             .catch(() => this.productsLoadingFailed = true)
             .then(() => this.productsLoading = false);
       }, 0);
