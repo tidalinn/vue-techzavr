@@ -3,7 +3,9 @@
     <div class="product__pic">
       <img :src="item.product.image" width="120" height="120" srcset="img/phone-square-3@2x.jpg 2x" alt="Название товара">
     </div>
-    <h3 class="product__title">{{ item.product.title }}</h3>
+    <router-link class="product__link" :to="{name: 'products', params: {id: item.product.id}}">
+      <h3 class="product__title">{{ item.product.title }}</h3>
+    </router-link>
     <span class="product__code">Аритикул: {{ item.product.id }}</span>
 
     <BaseAddReduceAmount class="product__counter" 
@@ -23,7 +25,7 @@
 <script>
 import BaseAddReduceAmount from '@/components/BaseAddReduceAmount.vue';
 import numberFormat from '@/helpers/numberFormat';
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: ['item'],
@@ -35,15 +37,22 @@ export default {
         return this.item.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', { 
+        this.$store.dispatch('updateCartProductAmount', { 
           productId: this.item.productId,
-          amount: value,    
+          amount: value,
         });
       },
     },
   },
   methods: {
-    ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
+    ...mapActions(['deleteCartProduct']),
+
+    deleteProduct() {      
+      this.deleteCartProduct({ productId: this.item.product.id })
+        .then(() => {
+          console.log('deleted');
+        });
+    },
   },
 };
 </script>

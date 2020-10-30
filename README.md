@@ -7,3 +7,4 @@
 - Created pagination with $emit from child to parent
 - Created eventBus.js and added products properties to the ProductPage
 - Created $router and $store and two files CartPage.vue with BaseAddReduceAmount.vue component
+- Created connection with API + Uploaded Cart, Product and Catalogue pages + Added preloaders

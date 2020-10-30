@@ -13,6 +13,17 @@
       <h1 class="content__title">Корзина</h1>
       <span class="content__info">{{ totalAmount }} {{ totalAmount | wordDecline(['товар', 'товара', 'товаров']) }}</span>
     </div>
+    
+    <div v-if="cartLoading">
+      <h4 class="product__status product__loading">Идёт загрузка корзины...</h4>
+      <div class="load">
+        <hr/><hr/><hr/><hr/>
+      </div>
+    </div>
+    <div class="product__status product__failed" v-else-if="cartLoadingFailed">
+      <h4>Произошла ошибка при загрузке корзины</h4>
+      <button @click.prevent="loadProduct">Попробовать ещё раз</button>
+    </div>
 
     <section class="cart">
       <form class="cart__form form" action="#" method="POST">
@@ -37,9 +48,15 @@
 import CartItem from '@/components/cart/CartItem.vue';
 import numberFormat from '@/helpers/numberFormat';
 import wordDecline from '@/helpers/wordDecline';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      cartLoading: true,
+      cartLoadingFailed: false,
+    };
+  },
   components: { CartItem },
   filters: { numberFormat, wordDecline },
   computed: {
@@ -48,6 +65,26 @@ export default {
       totalPrice: 'cartTotalPrice',
       totalAmount: 'cartTotalAmount',
     }),
+  },
+  methods: {
+    ...mapActions(['loadCart']),
+
+    loadProductsInCart() {
+      this.cartLoading = true;
+      this.cartLoadingFailed = false;
+
+      this.loadCart()
+        .catch(() => {
+          this.cartLoading = false;
+          this.cartLoadingFailed = true;
+        })
+        .then(() => {
+          this.cartLoading = false;
+        });
+    },
+  },
+  created() {
+    this.loadProductsInCart();
   },
 };
 </script>

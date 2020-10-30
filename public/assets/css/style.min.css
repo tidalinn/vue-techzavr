@@ -101,6 +101,10 @@ a {
 	padding-right: 15px
 }
 
+.container__minheight {
+	min-height: 550px
+}
+
 .button {
 	margin: 0;
 	border: 0;
@@ -270,6 +274,22 @@ a {
 	-webkit-box-align: start;
 	-ms-flex-align: start;
 	align-items: flex-start
+}
+
+.catalog__failed button, .product__failed button {
+	font-size: 16px;
+	background-color: #e0e0e0;
+	border-radius: 10px;
+	border-style: none;
+	border: 1px solid #939393;
+	padding: 10px 30px;
+}
+
+.catalog__failed button:hover, .product__failed button:hover {
+	background-color: #8BE000;
+	border-color: #8BE000;
+	cursor: pointer;
+	transition: linear .2s;
 }
 
 .filter {
@@ -881,6 +901,10 @@ a {
 	-ms-flex-align: center;
 	align-items: center;
 	grid-gap: 10px 20px
+}
+
+.product__status--add {
+	padding-top: 10px;
 }
 
 .product__pic {

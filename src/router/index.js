@@ -9,8 +9,8 @@ Vue.use(VueRouter);
 
 const routes = [
   { name: 'main', component: MainPage, path: '/' },
-  { name: 'product', component: ProductPage, path: '/product/:id' },
-  { name: 'cart', component: CartPage, path: '/cart' },
+  { name: 'products', component: ProductPage, path: '/products/:id' },
+  { name: 'baskets', component: CartPage, path: '/baskets' },
   { name: 'notFound', component: NotFoundPage, path: '*' },
 ];
 

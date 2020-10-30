@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import '@/assets/css/catalog.css';
+
 import CatalogItem from '@/components/catalog/CatalogItem.vue';
 
 export default {
@@ -13,5 +15,3 @@ export default {
   components: { CatalogItem },
 };
 </script>
-
-<style src="../../../public/assets/css/catalog.css" />

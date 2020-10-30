@@ -31,7 +31,7 @@
       <!-- Color filter -->
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <BaseColors :colors="colors" @change-color="getColor" />
+        <BaseColors :colors="colors" :selected-color.sync="currentColorId" />
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
@@ -42,8 +42,8 @@
 
 <script>
 import BaseColors from '@/components/BaseColors.vue';
-import categories from '@/data/categories';
-import colors from '@/data/colors';
+import axios from 'axios';
+import API_BASE_URL from '@/config';
 
 export default {
   data() {
@@ -51,17 +51,24 @@ export default {
       currentPriceFrom: 0,
       currentPriceTo: 0,
       currentCategoryId: 0,
-      currentColor: 0,
+      currentColorId: 0,
+      categoriesData: null,
+      colorsData: null,
     };
   },
-  props: ['priceFrom', 'priceTo', 'categoryId', 'colorCode'],
+  props: {
+    priceFrom: Number,
+    priceTo: Number,
+    categoryId: Number,
+    colorId: Number,
+  },
   components: { BaseColors },
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
     },
     colors() {
-      return colors;
+      return this.colorsData ? this.colorsData.items : [];
     },
   },
   watch: {
@@ -74,8 +81,8 @@ export default {
     categoryId(value) {
       this.currentCategoryId = value;
     },
-    colorCode(value) {
-      this.currentColor = value;
+    colorId(value) {
+      this.currentColorId = value;
     },
   },
   methods: {
@@ -83,17 +90,33 @@ export default {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
       this.$emit('update:categoryId', this.currentCategoryId);
-      this.$emit('update:colorCode', this.currentColor);
+      this.$emit('update:colorId', this.currentColorId);
     },
     reset() {
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
-      this.$emit('update:colorCode', 0);
+      this.$emit('update:colorId', 0);
     },
     getColor(color) {
-      this.currentColor = color;
+      this.currentColorId = color;
     },
+    loadCategories() {
+      axios.get(`${API_BASE_URL}/api/productCategories`)
+        .then((response) => {
+          this.categoriesData = response.data;
+        });
+    },
+    loadColors() {
+      axios.get(`${API_BASE_URL}/api/colors`)
+        .then((response) => {
+          this.colorsData = response.data;
+        });
+    },
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
 };
 </script>
