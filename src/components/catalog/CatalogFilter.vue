@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import BaseColors from '@/components/BaseColors.vue';
+import BaseColors from '@/components/base/BaseColors.vue';
 import axios from 'axios';
 import API_BASE_URL from '@/config';
 

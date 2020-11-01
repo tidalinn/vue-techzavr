@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import BaseColors from '@/components/BaseColors.vue';
+import BaseColors from '@/components/base/BaseColors.vue';
 import gotoPage from '@/helpers/gotoPage';
 import numberFormat from '@/helpers/numberFormat';
 

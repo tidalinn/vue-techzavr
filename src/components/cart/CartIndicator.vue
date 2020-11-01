@@ -6,7 +6,7 @@
 
     <span class="header__count" aria-label="Количество товаров">
       {{ totalAmount }}
-      <div class="load__mini" v-if="totalAmount === 0 && $store.state.userAccessKey !== null">
+      <div class="load__mini" v-if="cartLoading">
         <hr/><hr/><hr/><hr/>
       </div>
     </span>
@@ -17,13 +17,41 @@
 <script>
 import '@/assets/css/preloader.css';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      cartLoading: true,
+      loadProductsTimer: null,
+    };
+  },
   computed: {
     ...mapGetters({
       totalAmount: 'cartTotalAmount',
     }),
+  },
+  methods: {
+    ...mapActions(['loadCart']),
+
+    loadProductsInCart() {
+      clearTimeout(this.loadProductsTimer);
+
+      this.loadProductsTimer = setTimeout(() => {
+        this.cartLoading = true;
+
+        this.loadCart()
+          .catch(() => {
+            this.cartLoading = false;
+          })
+          .then(() => {
+            this.cartLoading = false;
+          });
+      }, 500);
+    },
+  },
+  created() {
+    this.loadProductsInCart();
   },
 };
 </script>

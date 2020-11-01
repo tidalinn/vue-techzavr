@@ -31,7 +31,7 @@
 import '@/assets/css/preloader.css';
 
 import CatalogList from '@/components/catalog/CatalogList.vue';
-import BasePagination from '@/components/BasePagination.vue';
+import BasePagination from '@/components/base/BasePagination.vue';
 import CatalogFilter from '@/components/catalog/CatalogFilter.vue';
 import wordDecline from '@/helpers/wordDecline';
 import axios from 'axios';

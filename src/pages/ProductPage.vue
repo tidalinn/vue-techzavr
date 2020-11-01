@@ -95,8 +95,8 @@
 <script>
 import '@/assets/css/preloader.css';
 
-import BaseColors from '@/components/BaseColors.vue';
-import BaseAddReduceAmount from '@/components/BaseAddReduceAmount.vue';
+import BaseColors from '@/components/base/BaseColors.vue';
+import BaseAddReduceAmount from '@/components/base/BaseAddReduceAmount.vue';
 import numberFormat from '@/helpers/numberFormat';
 import axios from 'axios';
 import API_BASE_URL from '@/config';
