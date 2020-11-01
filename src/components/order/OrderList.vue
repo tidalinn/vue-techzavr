@@ -21,17 +21,18 @@
     </ul>
     <div class="cart__total">
       <p>Доставка: <b>500 ₽</b></p>
-      <p>Итого: <b>{{ totalAmount }}</b> товара на сумму <b>{{ totalPrice | numberFormat }} ₽</b></p>
+      <p>Итого: <b>{{ totalAmount }}</b> {{ totalAmount | wordDecline(['товар', 'товара', 'товаров']) }} на сумму <b>{{ totalPrice | numberFormat }} ₽</b></p>
     </div>
   </div>
 </template>
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
+import wordDecline from '@/helpers/wordDecline';
 
 export default {
   props: ['products', 'totalAmount', 'totalPrice', 'productsLoading', 'productsLoadingFailed', 'loadProducts'],
-  filters: { numberFormat },
+  filters: { numberFormat, wordDecline },
   computed: {
     amount: {
       get() {

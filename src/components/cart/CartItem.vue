@@ -8,23 +8,7 @@
     </router-link>
     <span class="product__code">Аритикул: {{ item.product.id }}</span>
 
-    <BaseAddReduceAmount class="product__counter" v-model.number="amount" :amount="amount" :width="10" />
-
-    <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-
-      <input type="text" v-model.number="amount" name="count">
-
-      <button type="button" aria-label="Добавить один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div>
+    <BaseAddReduceAmount class="product__counter" v-model.number="amount" :amount.sync="amount" />
 
     <b class="product__price">{{ (item.amount * item.product.price) | numberFormat }} ₽</b>
 

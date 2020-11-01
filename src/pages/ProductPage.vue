@@ -48,7 +48,7 @@
               </fieldset>
 
               <div class="item__row">
-                <BaseAddReduceAmount v-model.number="productAmount" :amount="productAmount" :width="12" />
+                <BaseAddReduceAmount v-model.number="productAmount" :amount.sync="productAmount" />
                 <button class="button button--primery" type="submit" :disabled="productAddSending">В корзину</button>
               </div>
               <div class="product__status--add" v-show="productAdded">Товар добавлен в корзину</div>
@@ -171,3 +171,10 @@ export default {
   }
 };
 </script>
+
+<style lang="css" scoped>
+  .form__counter svg {
+    width: 12px;
+    height: 12px;
+  }
+</style>
