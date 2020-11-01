@@ -13,7 +13,7 @@
     <b class="product__price">{{ (item.amount * item.product.price) | numberFormat }} ₽</b>
 
     <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины" 
-            @click.prevent="deleteProduct(item.productId)">
+            @click.prevent="deleteProduct">
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
       </svg>
@@ -44,14 +44,10 @@ export default {
     },
   },
   methods: {
-    /* deleteProduct(productId) {
-      this.$store.commit('deleteCartProduct', productId);
-      console.log(this.$store.state.userAccessKey);
-    }, */
     ...mapActions(['deleteCartProduct']),
 
-    deleteProduct() {      
-      this.deleteCartProduct({ productId: this.item.product.id });
+    deleteProduct() {
+      this.deleteCartProduct(this.item.productId);
     },
   },
 };
