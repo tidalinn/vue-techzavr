@@ -108,7 +108,7 @@ export default {
               categoryId: this.filter.categoryId,
               minPrice: this.filter.priceFrom,
               maxPrice: this.filter.priceTo,
-              color: this.filter.colorId,
+              colorId: this.filter.colorId,
             }
           })
             .then((response) => {
