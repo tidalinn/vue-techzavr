@@ -146,16 +146,28 @@ export default {
     loadProduct() {
       this.productLoading = true;
       this.productLoadingFailed = false;
-
-      axios.get(`${API_BASE_URL}/api/products/`, {
-        params: {
-          id: +this.$route.params.id,
-        },
-      })
-        /* eslint-disable */
-        .then((response) => this.productData = response.data)
-        .catch(() => this.productLoadingFailed = true)
-        .then(() => this.productLoading = false);
+      clearTimeout(this.loadProductTimer);
+      
+      this.loadProductTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products/`, {
+          params: {
+            id: +this.$route.params.id,
+          },
+        })
+          /* eslint-disable */
+          .then((response) => {
+            this.productData = response.data;
+            
+            if (this.product === undefined) {
+              this.$router.push({ name: 'notFound' });
+            }
+          })
+          .catch(() => {
+            this.productLoading - false;
+            this.productLoadingFailed = true;
+          })
+          .then(() => this.productLoading = false);
+      }, 0);
     },
     getColor(color) {
       this.colorFromChildConponent = color;

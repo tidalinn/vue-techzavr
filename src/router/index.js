@@ -15,7 +15,8 @@ const routes = [
   { name: 'baskets', component: CartPage, path: '/baskets' },
   { name: 'orders', component: OrderPage, path: '/orders' },
   { name: 'orderInfo', component: OrderInfoPage, path: '/orders/:id' },
-  { name: 'notFound', component: NotFoundPage, path: '*' },
+  { name: 'notFound', component: NotFoundPage, path: '/404' },
+// Vue3  { path: '/:catchAll(.*)', redirect: '/404' },
 ];
 
 const router = new VueRouter({
