@@ -19,7 +19,7 @@
             <router-link class="breadcrumbs__link" :to="{name: 'main'}">Каталог</router-link>
           </li>
           <li class="breadcrumbs__item">
-            <router-link class="breadcrumbs__link" :to="{name: 'main'}">{{  }}</router-link>
+            <router-link class="breadcrumbs__link" :to="{name: 'main'}">{{ category.title }}</router-link>
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link">{{ product.title }}</a>
@@ -125,10 +125,9 @@ export default {
         ? this.productData.items.find((product) => product.id === +this.$route.params.id)
         : [];
     },
-    /* category is not returned from the server
     category() {
-      return this.productData.category;
-    }, */
+      return this.product.category;
+    },
   },
   methods: {
     ...mapActions(['addProductToCart']),
@@ -146,28 +145,25 @@ export default {
     loadProduct() {
       this.productLoading = true;
       this.productLoadingFailed = false;
-      clearTimeout(this.loadProductTimer);
       
-      this.loadProductTimer = setTimeout(() => {
-        axios.get(`${API_BASE_URL}/api/products/`, {
-          params: {
-            id: +this.$route.params.id,
-          },
+      axios.get(`${API_BASE_URL}/api/products/`, {
+        params: {
+          id: +this.$route.params.id,
+        },
+      })
+        /* eslint-disable */
+        .then((response) => {
+          this.productData = response.data;
+          
+          if (this.product === undefined) {
+            this.$router.push({ name: 'notFound' });
+          }
         })
-          /* eslint-disable */
-          .then((response) => {
-            this.productData = response.data;
-            
-            if (this.product === undefined) {
-              this.$router.push({ name: 'notFound' });
-            }
-          })
-          .catch(() => {
-            this.productLoading - false;
-            this.productLoadingFailed = true;
-          })
-          .then(() => this.productLoading = false);
-      }, 0);
+        .catch(() => {
+          this.productLoading = false;
+          this.productLoadingFailed = true;
+        })
+        .then(() => this.productLoading = false);
     },
     getColor(color) {
       this.colorFromChildConponent = color;
