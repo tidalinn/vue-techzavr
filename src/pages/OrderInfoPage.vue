@@ -86,6 +86,7 @@ export default {
         .catch(() => {
           this.orderData.productsLoading = false;
           this.orderData.productsLoadingFailed = true;
+          this.$router.push({ path: '/404' });
         })
         .then(() => {
           this.orderData.productsLoading = false;

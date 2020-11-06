@@ -19,7 +19,7 @@
             <router-link class="breadcrumbs__link" :to="{name: 'main'}">Каталог</router-link>
           </li>
           <li class="breadcrumbs__item">
-            <router-link class="breadcrumbs__link" :to="{name: 'main'}">{{ category.title }}</router-link>
+            <router-link class="breadcrumbs__link" :to="{name: 'main'}">{{ category.title}}</router-link>
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link">{{ product.title }}</a>
@@ -121,12 +121,10 @@ export default {
   },
   computed: {
     product() {
-      return this.productData
-        ? this.productData.items.find((product) => product.id === +this.$route.params.id)
-        : [];
+      return this.productData;
     },
     category() {
-      return this.product.category;
+      return this.productData.category;
     },
   },
   methods: {
@@ -145,25 +143,19 @@ export default {
     loadProduct() {
       this.productLoading = true;
       this.productLoadingFailed = false;
+      clearTimeout(this.loadProductTimer);
       
-      axios.get(`${API_BASE_URL}/api/products/`, {
-        params: {
-          id: +this.$route.params.id,
-        },
-      })
-        /* eslint-disable */
-        .then((response) => {
-          this.productData = response.data;
-          
-          if (this.product === undefined) {
-            this.$router.push({ name: 'notFound' });
-          }
-        })
-        .catch(() => {
-          this.productLoading = false;
-          this.productLoadingFailed = true;
-        })
-        .then(() => this.productLoading = false);
+      this.loadProductTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
+          /* eslint-disable */
+          .then((response) => this.productData = response.data )
+          .catch(() => {
+            this.productLoading = false;
+            this.productLoadingFailed = true;
+            this.$router.push({ path: '/404' });
+          })
+          .then(() => this.productLoading = false);
+      }, 0);
     },
     getColor(color) {
       this.colorFromChildConponent = color;
