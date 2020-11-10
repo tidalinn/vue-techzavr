@@ -8,7 +8,7 @@
     </router-link>
     <span class="product__code">Аритикул: {{ item.product.id }}</span>
 
-    <BaseAddReduceAmount class="product__counter" v-model.number="amount" :amount.sync="amount" />
+    <BaseAddReduceAmount class="product__counter" v-model.number="amount" />
 
     <b class="product__price">{{ (item.amount * item.product.price) | numberFormat }} ₽</b>
 

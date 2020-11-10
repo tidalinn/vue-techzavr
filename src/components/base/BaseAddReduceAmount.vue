@@ -7,7 +7,7 @@
       </svg>
     </button>
 
-    <input type="text" v-model.number="property" name="count">
+    <input type="text" :value="amount" @input="changeAmount($event.target.value)" name="count">
 
     <button class="add__item" type="button" aria-label="Добавить один товар">
       <svg width="10px" height="10px" fill="currentColor" @click.prevent="changeAmount(amount+1)">
@@ -24,19 +24,9 @@ export default {
     event: 'amountAddReduce',
   },
   props: ['amount'],
-  computed: {
-    property: {
-      get() {
-        return this.amount;
-      },
-      set(value) {
-        this.$emit('update:amount', value);
-      },
-    },
-  },
   methods: {
     amountAddReduce(amount) {
-      this.$emit('amountAddReduce', amount);
+      this.$emit('amount-add-reduce', amount);
     },
     changeAmount(amount) {
       if (amount > 0) {
